@@ -12,6 +12,8 @@ tube2mp3 <URL> <output_name>
 
 ## Dependency
 
+- python3 (Download from [HERE](https://www.python.org/downloads/))
+
 - ffmpeg
 
 mac: ```brew install ffmpeg```
