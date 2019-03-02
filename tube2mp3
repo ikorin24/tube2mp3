@@ -1,0 +1,28 @@
+#! /bin/sh
+# Youtubeからmp3をダウンロード
+# 使い方
+# tube2mp3 [URL] [output_name]
+# 必要ライブラリ
+# ffmpeg, youtube-dl
+echo "arg1 "$1
+if [ ! $# -eq 2 ]; then
+  echo "arg count: "$#
+ 
+  echo "ERROR:"
+  echo "You need 2 argument"
+  echo "usage: tube2mp3 [URL] [output_name]"
+  exit 1
+fi
+tmp_dir="$(dirname $0)/tmp"
+mkdir -p $tmp_dir 2>/dev/null
+tmp_out="${tmp_dir}/___tube2mp3_tmp.m4a"
+youtube-dl $1 -f bestaudio[ext=m4a] -o $tmp_out   # download from youtube
+if [ ${2##*.} = "mp3" ]; then
+  outfile=$2
+else
+  outfile="${2%.*}.mp3"
+fi
+echo "outfilename ::: ${outfile}"
+ffmpeg -i $tmp_out $outfile             # convert m4a to mp3
+rm $tmp_out
+echo "Youtube to MP3 Complete !"
